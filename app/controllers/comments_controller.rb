@@ -1,6 +1,10 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user!
-  before_action :find_movie!
+  before_action :find_movie!, only: [:create, :destroy]
+
+  def index
+    @comments = Comment.where("created_at >= ?", 1.week.ago.utc).group(:user).order("count_id desc").count("id").first(10)
+  end
 
   def create
     @comment = @movie.comments.new(comment_params)
