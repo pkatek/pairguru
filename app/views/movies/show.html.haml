@@ -3,3 +3,13 @@
   = @movie.description
 - if user_signed_in?
   %p= link_to 'Email me details about this movie', send_info_movie_path(@movie), class: 'btn btn-sm btn-default'
+
+  - if @movie.comments.any?
+    .row
+      .col-sm-12
+        %h3 User Comments
+    .row
+      = render partial: 'comments/comment', collection: @movie.comments.reverse
+
+
+  = render partial: 'comments/form' unless current_user.comments.where(movie_id: @movie.id).any?
