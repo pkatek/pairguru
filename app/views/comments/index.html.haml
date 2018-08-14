@@ -1,0 +1,13 @@
+%h1 Top 10 commentators last 7 days
+
+%table
+  %thead
+    %tr
+      %th User
+      %th Count
+
+  %tbody
+    - @comments.each do |user, comment|
+      %tr
+        %td= user.name
+        %td= comment
